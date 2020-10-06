@@ -2,7 +2,7 @@
 用于存放用户视图层
 """
 import time
-from interface import usr_interface
+from interface import usr_interface, bank_interface
 from lib.common import exit_in_t
 
 global g_current_account
@@ -22,6 +22,8 @@ def register():
             print(msg)
 
             if state:
+                global g_current_account
+                g_current_account = usrname
                 break
         else:
             print("两次输入密码不匹配，请重新输入密码！")
@@ -59,18 +61,45 @@ def check_balance():
         exit_in_t(3, "将会在%ss后返回主界面")
 
 # 4. 提现
-@usr_authenticate(g_current_account)
 def withdraw():
+    global g_current_account
+    if not g_current_account:
+        print("当前用户未登录！请重新登陆。")
+        login()
+    else:
+        amount = input("请输入您想要提现的金额：")
+        state, msg = bank_interface.withdraw(account=g_current_account,
+                                             amount=amount)
+        print(msg)
 
-    pass
+
 # 5. 还款
 def repay():
+    global g_current_account
+    if not g_current_account:
+        print("当前用户未登录！请重新登陆。")
+        login()
+    else:
+        amount = input("请输入您想要还款的金额：")
+        state, msg = bank_interface.repay(account=g_current_account,
+                                          amount=amount)
+        print(msg)
 
-    pass
+
 # 6. 转账
 def transfer():
+    global g_current_account
+    if not g_current_account:
+        print("当前用户未登录！请重新登陆。")
+        login()
+    else:
+        target_account = input("请输入转账账户：")
+        amount = input("请输入转账金额：")
+        state, msg = bank_interface.transfer(account=g_current_account,
+                                             target_account=target_account,
+                                             amount=amount)
+        print(msg)
 
-    pass
 # 7. 查看流水
 def check_statement():
 
