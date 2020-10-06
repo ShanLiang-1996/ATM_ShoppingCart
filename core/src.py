@@ -3,7 +3,10 @@
 """
 import time
 from interface import usr_interface
-from lib import common
+from lib.common import exit_in_t
+
+global g_current_account
+g_current_account = None
 
 # 1. 注册
 def register():
@@ -41,21 +44,22 @@ def login():
         elif state == "usr_non-existent":
             continue
         elif state == "sucess":
-            global current_account
-            current_account = usrname
-            common.exit_in_t(10, "将会在%ss后返回主界面")
+            global g_current_account
+            g_current_account = usrname
+            exit_in_t(1, "将会在%ss后返回主界面")
             break
 
 # 3. 查看余额
 def check_balance():
-    global current_account
-    if not current_account:
+    global g_current_account
+    if not g_current_account:
         print("当前用户未登陆！请重新登陆。")
     else:
-        print(usr_interface.check_balance(current_account))
-        common.exit_in_t(10, "将会在%ss后返回主界面")
+        print(usr_interface.check_balance(g_current_account))
+        exit_in_t(3, "将会在%ss后返回主界面")
 
 # 4. 提现
+@usr_authenticate(g_current_account)
 def withdraw():
 
     pass
@@ -87,6 +91,10 @@ def admin():
 def exit_program():
     exit(0)
 
+
+
+
+
 func_dict = {
     '1': register,
     '2': login,
@@ -102,9 +110,10 @@ func_dict = {
 }
 
 
-
 def run():
-    current_account = None
+
+    global g_current_account
+
     while True:
         print("""
 ===== ATM + ShoppingCart =====

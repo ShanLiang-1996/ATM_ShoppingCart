@@ -2,6 +2,8 @@
 存放公共方法
 """
 import time
+from db import db_handler
+
 
 def exit_in_t(t, str="将在%ss后返回"):
     if '%s' not in str:
@@ -22,3 +24,23 @@ def disp_basic_info(usr_data):
     购物车：{usr_data['balance']}
         """
     return disp_str
+
+
+def usr_authenticate(current_account):
+    print(current_account)
+    def my_dacerator(func):
+        def swapper(*args, **kwargs):
+            print(current_account)
+            current_account_data = db_handler.select(current_account)
+            err_times = 0
+            while err_times < 3:
+                input_password = input("请输入您的密码以确认您的操作：")
+                if current_account_data['password'] == password:
+                    print("认证成功！")
+                    func(*args, **kwargs)
+                    break
+                else:
+                    print("输入错误！")
+                    err_times += 1
+        return swapper
+    return my_dacerator
