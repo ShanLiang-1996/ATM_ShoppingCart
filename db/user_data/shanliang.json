@@ -1,0 +1,9 @@
+{
+    "usrname": "shanliang",
+    "password": "123",
+    "credit_limit": 15000,
+    "balance": 0,
+    "shopping_cart": [],
+    "statement": {},
+    "isfreeze": false
+}
