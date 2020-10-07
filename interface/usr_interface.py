@@ -15,7 +15,7 @@ def regist(usrname, password, limit=15000):
             'password': password,
             'credit_limit': limit,
             'balance': limit,
-            'shopping_cart': [],
+            'shopping_cart': {},
             'statement': {},
             'isfreeze': False,
         }
