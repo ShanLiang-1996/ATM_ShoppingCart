@@ -3,7 +3,9 @@
 """
 from interface import bank_interface
 from db import db_handler
+from lib import common
 
+usr_logger = common.get_logger('user')
 
 def shopping(usr, shopping_cart):
 
@@ -18,6 +20,10 @@ def shopping(usr, shopping_cart):
     else:
         return False, "支付失败，账户余额不足。"
 
+
+def check_shopping_cart(usr):
+    data = db_handler.select(usr)
+    return data['shopping_cart']
 
 def add_to_cart(usr, shopping_cart):
 

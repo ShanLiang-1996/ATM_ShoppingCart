@@ -167,8 +167,19 @@ def shopping():
 # 9. 查看购物车
 @check_login
 def check_shopping_cart():
+    msg = shop_interface.check_shopping_cart(g_current_account)
+    print(msg)
 
-    pass
+    while True:
+        choice = input("现在购买请输入1，稍后购买请输入2：").strip()
+        if choice == '1':
+            _, shopping_msg = shop_interface.shopping(g_current_account, msg)
+            print(shopping_msg)
+            break
+        elif choice == '2':
+            break
+        else:
+            print("输入错误请重新输入")
 # 10. 管理员
 def admin_func():
     admin.run()
