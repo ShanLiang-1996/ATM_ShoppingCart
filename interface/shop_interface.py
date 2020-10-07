@@ -5,7 +5,6 @@ from interface import bank_interface
 from db import db_handler
 from lib import common
 
-usr_logger = common.get_logger('user')
 
 def shopping(usr, shopping_cart):
 
