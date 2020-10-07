@@ -2,14 +2,10 @@
     "usrname": "liusifan",
     "password": "d94c5dd3a0fa1c07df27ef3e9b249a96",
     "credit_limit": 15000,
-    "balance": 6000.0,
-    "shopping_cart": [],
+    "balance": 5000.0,
+    "shopping_cart": {},
     "statement": {
-        "2020-10-07 20:47:15": [
-            "receive",
-            1000.0
-        ],
-        "2020-10-07 20:47:40": [
+        "2020-10-07 23:52:48": [
             "transfer",
             -10000.0
         ]

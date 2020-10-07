@@ -73,7 +73,7 @@ def repay(account, amount):
         return True, f"您的还款额太多了，已为您恢复最大额度。退还：{return_amount}"
 
 
-@ usr_authenticate
+@usr_authenticate
 def transfer(account, target_account, amount):
 
     data = db_handler.select(account)
@@ -99,8 +99,22 @@ def transfer(account, target_account, amount):
     else:
         return False, "目标账户不存在！"
 
+@usr_authenticate
+def pay(account, cost):
 
-@ usr_authenticate
+    data = db_handler.select(account)
+
+    if data['balance'] < cost:
+        return False
+    else:
+        data['balance'] -= cost
+        operation = get_operation('payment', -1 * cost)
+        data['statement'].update(operation)
+        db_handler.create(data)
+        return True
+
+
+@usr_authenticate
 def check_statement(account):
     data = db_handler.select(account)
     return True, data['statement']

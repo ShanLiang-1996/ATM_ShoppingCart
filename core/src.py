@@ -2,7 +2,7 @@
 用于存放用户视图层
 """
 import time
-from interface import usr_interface, bank_interface
+from interface import usr_interface, bank_interface,shop_interface
 from lib.common import exit_in_t, check_login
 from core import admin
 
@@ -102,7 +102,68 @@ def check_statement():
 @check_login
 def shopping():
 
-    pass
+    good_list = [
+        ['上海灌汤包', 30],
+        ['特斯拉', 150000],
+        ['泡椒凤爪', 15],
+        ['香港地道鱼丸', 20],
+        ['macbook pro', 17000],
+        ['macbook air', 12000],
+    ]
+
+    shopping_cart = {}
+
+    while True:
+
+        for index, good in enumerate(good_list):
+            good_name, good_price = good
+            print(f'商品编号为{index}',
+                  f'商品名称：{good_name}',
+                  f'商品单价：{good_price}')
+
+        choice = input('请输入商品编号(若结账当前购物车请输入y，储存当前购物车请输入n)：').strip()
+
+        if choice == 'y':
+            if not shopping_cart:
+                print("当前购物车为空，请添加商品！")
+                continue
+
+            state, msg = shop_interface.shopping(g_current_account,
+                                                 shopping_cart)
+            print(msg)
+            if state: break
+            else: continue
+
+        elif choice == 'n':
+            if not shopping_cart:
+                print("当前购物车为空，请添加商品！")
+                continue
+
+            state, msg = shop_interface.add_to_cart(g_current_account,
+                                                    shopping_cart)
+            print(msg)
+            if state: break
+            else: continue
+
+
+        if not choice.isdigit():
+            print("请输入正确的商品编号！")
+            continue
+        choice = int(choice)
+
+        if choice not in range(len(good_list)):
+            print("请输入正确的商品编号！")
+            continue
+
+        good_name, good_price = good_list[choice]
+
+        if good_name in shopping_cart.keys():
+            shopping_cart[good_name][1] += 1
+        else:
+            shopping_cart[good_name] = [good_price, 1]
+
+
+
 # 9. 查看购物车
 @check_login
 def check_shopping_cart():

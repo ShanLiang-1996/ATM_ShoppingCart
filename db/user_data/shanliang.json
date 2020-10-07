@@ -1,19 +1,28 @@
 {
     "usrname": "shanliang",
     "password": "d94c5dd3a0fa1c07df27ef3e9b249a96",
-    "credit_limit": 100000.0,
-    "balance": 107950.0,
-    "shopping_cart": [],
+    "credit_limit": 15000,
+    "balance": 24955.0,
+    "shopping_cart": {
+        "macbook pro": [
+            17000,
+            3
+        ],
+        "\u7279\u65af\u62c9": [
+            150000,
+            1
+        ],
+        "\u9999\u6e2f\u5730\u9053\u9c7c\u4e38": [
+            20,
+            1
+        ]
+    },
     "statement": {
-        "2020-10-07 20:47:01": [
-            "withdraw",
-            -1050.0
+        "2020-10-07 23:51:57": [
+            "payment",
+            -45
         ],
-        "2020-10-07 20:47:15": [
-            "transfer",
-            -1000.0
-        ],
-        "2020-10-07 20:47:40": [
+        "2020-10-07 23:52:48": [
             "receive",
             10000.0
         ]
