@@ -3,7 +3,8 @@
 """
 import time
 from interface import usr_interface, bank_interface
-from lib.common import exit_in_t
+from lib.common import exit_in_t, check_login
+from core import admin
 
 global g_current_account
 g_current_account = None
@@ -52,76 +53,64 @@ def login():
             break
 
 # 3. 查看余额
+@check_login
 def check_balance():
     global g_current_account
-    if not g_current_account:
-        print("当前用户未登陆！请重新登陆。")
-    else:
-        print(usr_interface.check_balance(g_current_account))
-        exit_in_t(3, "将会在%ss后返回主界面")
+    print(usr_interface.check_balance(g_current_account))
+    exit_in_t(3, "将会在%ss后返回主界面")
 
 # 4. 提现
+@check_login
 def withdraw():
     global g_current_account
-    if not g_current_account:
-        print("当前用户未登录！请重新登陆。")
-        login()
-    else:
-        amount = input("请输入您想要提现的金额：")
-        state, msg = bank_interface.withdraw(account=g_current_account,
-                                             amount=amount)
-        print(msg)
+
+    amount = input("请输入您想要提现的金额：")
+    state, msg = bank_interface.withdraw(account=g_current_account,
+                                         amount=amount)
+    print(msg)
 
 
 # 5. 还款
+@check_login
 def repay():
     global g_current_account
-    if not g_current_account:
-        print("当前用户未登录！请重新登陆。")
-        login()
-    else:
-        amount = input("请输入您想要还款的金额：")
-        state, msg = bank_interface.repay(account=g_current_account,
-                                          amount=amount)
-        print(msg)
+    amount = input("请输入您想要还款的金额：")
+    state, msg = bank_interface.repay(account=g_current_account,
+                                      amount=amount)
+    print(msg)
 
 
 # 6. 转账
+@check_login
 def transfer():
     global g_current_account
-    if not g_current_account:
-        print("当前用户未登录！请重新登陆。")
-        login()
-    else:
-        target_account = input("请输入转账账户：")
-        amount = input("请输入转账金额：")
-        state, msg = bank_interface.transfer(account=g_current_account,
-                                             target_account=target_account,
-                                             amount=amount)
-        print(msg)
+    target_account = input("请输入转账账户：")
+    amount = input("请输入转账金额：")
+    state, msg = bank_interface.transfer(account=g_current_account,
+                                         target_account=target_account,
+                                         amount=amount)
+    print(msg)
 
 # 7. 查看流水
+@check_login
 def check_statement():
     global g_current_account
-    if not g_current_account:
-        print("当前用户未登录！请重新登陆。")
-        login()
-    else:
-        state, msg = bank_interface.check_statement(account=g_current_account)
-        print(msg)
+    state, msg = bank_interface.check_statement(account=g_current_account)
+    print(msg)
 
 # 8. 购物
+@check_login
 def shopping():
 
     pass
 # 9. 查看购物车
+@check_login
 def check_shopping_cart():
 
     pass
 # 10. 管理员
-def admin():
-
-    pass
+def admin_func():
+    admin.run()
 
 def exit_program():
     exit(0)
@@ -140,7 +129,7 @@ func_dict = {
     '7': check_statement,
     '8': shopping,
     '9': check_shopping_cart,
-    '0': admin,
+    '0': admin_func,
     'q': exit_program,
 }
 

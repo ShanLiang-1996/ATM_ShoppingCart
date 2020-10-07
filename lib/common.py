@@ -2,6 +2,8 @@
 存放公共方法
 """
 import time
+import hashlib
+import core
 from db import db_handler
 
 
@@ -24,3 +26,24 @@ def disp_basic_info(usr_data):
     购物车：{usr_data['shopping_cart']}
         """
     return disp_str
+
+
+def get_pwd_md5(password):
+    md5_obj = hashlib.md5()
+    md5_obj.update(password.encode('utf-8'))
+    salt = "The World You Love."
+    md5_obj.update(salt.encode('utf-8'))
+
+    return md5_obj.hexdigest()
+
+def check_login(func):
+    def swapper(*args, **kwargs):
+        from core.src import g_current_account
+        if g_current_account:
+            res = func(*args, **kwargs)
+            return res
+        else:
+            print("当前用户未登陆，请重新登录。")
+            core.src.login()
+
+    return swapper

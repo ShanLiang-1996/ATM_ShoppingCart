@@ -2,6 +2,7 @@
 银行相关业务借口
 """
 from db import db_handler
+from lib import common
 import datetime
 
 def usr_authenticate(func):
@@ -11,6 +12,7 @@ def usr_authenticate(func):
         err_times = 0
         while err_times < 3:
             input_password = input("请输入您的密码以确认您的操作：")
+            input_password = common.get_pwd_md5(input_password)
             if current_account_data['password'] == input_password:
                 print("认证成功！")
                 res = func(*args, **kwargs)

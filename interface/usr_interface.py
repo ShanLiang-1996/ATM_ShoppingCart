@@ -9,6 +9,7 @@ def regist(usrname, password, limit=15000):
     if db_handler.select(usrname):
         return False, "当前用户名已存在，请重新输入！"
     else:
+        password = common.get_pwd_md5(password)
         usr_profile = {
             'usrname': usrname,
             'password': password,
@@ -32,6 +33,7 @@ def login(usrname, password):
 
     if usr_data := db_handler.select(usrname):
 
+        password = common.get_pwd_md5(password)
         if usr_data['password'] == password:
             return 'sucess', common.disp_basic_info(usr_data)
         else:
