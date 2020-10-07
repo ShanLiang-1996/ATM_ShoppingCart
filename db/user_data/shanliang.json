@@ -2,8 +2,13 @@
     "usrname": "shanliang",
     "password": "123",
     "credit_limit": 15000,
-    "balance": 15000,
+    "balance": 20000.0,
     "shopping_cart": [],
-    "statement": {},
+    "statement": {
+        "2020-10-07 18:44:12": [
+            "receive",
+            5000.0
+        ]
+    },
     "isfreeze": false
 }

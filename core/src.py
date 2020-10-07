@@ -102,8 +102,14 @@ def transfer():
 
 # 7. 查看流水
 def check_statement():
+    global g_current_account
+    if not g_current_account:
+        print("当前用户未登录！请重新登陆。")
+        login()
+    else:
+        state, msg = bank_interface.check_statement(account=g_current_account)
+        print(msg)
 
-    pass
 # 8. 购物
 def shopping():
 
