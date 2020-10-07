@@ -3,9 +3,12 @@
 """
 import time
 import hashlib
+import logging
+import logging.config
+
 import core
 from db import db_handler
-
+from conf import settings
 
 def exit_in_t(t, str="将在%ss后返回"):
     if '%s' not in str:
@@ -47,3 +50,14 @@ def check_login(func):
             core.src.login()
 
     return swapper
+
+
+def get_logger(log_type):
+
+    logging.config.fileConfig(
+        settings.LOGGING_DIC
+    )
+
+    logger = logging.getLogger(log_type)
+
+    return logger
